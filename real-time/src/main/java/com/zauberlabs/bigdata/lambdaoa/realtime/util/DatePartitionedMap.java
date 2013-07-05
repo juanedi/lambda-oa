@@ -31,7 +31,7 @@ public class  DatePartitionedMap<T> {
     }
     
     public final void dropLessThan(final Date ts) {
-        this.target = target.tailMap(ts);
+        this.target = new ConcurrentSkipListMap<Date, T>(target.tailMap(ts));
     }
     
     public final T get(final Date k) {

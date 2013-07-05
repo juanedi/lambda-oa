@@ -18,10 +18,9 @@ import backtype.storm.tuple.Tuple;
 import com.google.common.base.Objects;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import com.splout.db.common.SploutClient;
 import com.zauberlabs.bigdata.lambdaoa.realtime.util.DatePartitionedMap;
 import com.zauberlabs.bigdata.lambdaoa.realtime.util.FragStore;
-import com.zauberlabs.bigdata.lambdaoa.realtime.util.SploutUpdater;
+import com.zauberlabs.bigdata.lambdaoa.realtime.util.NullFragStore;
 
 /**
  * Counter for fragger kills  
@@ -44,7 +43,8 @@ public class FragCountBolt extends BaseRichBolt {
     @SuppressWarnings("rawtypes")
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         this.collector = collector;
-        this.fragStore = new SploutUpdater(new SploutClient(""));
+//        this.fragStore = new SploutUpdater(new SploutClient(""));
+        this.fragStore = new NullFragStore();
         this.fragsCounters = new DatePartitionedMap<Multiset<String>>(new Callable<Multiset<String>>() {
                 @Override public Multiset<String> call() throws Exception {
                     return HashMultiset.create();

@@ -10,7 +10,6 @@ import org.fest.util.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import com.splout.db.common.SploutClient;
 
@@ -45,8 +44,8 @@ public class SploutUpdater implements FragStore {
         }
     }
     
-    public final void updateFragVersusCount(final Table<String, String, Integer> fraggers) {
-        for (final Cell<String, String, Integer> cell : fraggers.cellSet()) {
+    public final void updateFragVersusCount(final VsCount fraggers) {
+        for (final Cell<String, String, Integer> cell : fraggers.getTarget().cellSet()) {
             try {
                 final String fragger = cell.getColumnKey();
                 final String fragged = cell.getRowKey();

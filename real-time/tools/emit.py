@@ -29,6 +29,6 @@ while True:
     c = c + 1
     if c == 10000:
         time.sleep(1)
-        c = 0
-        print "sleeping"
+	print "Sleeping after %d messages"%(c, )
+	c = 0
 connection.close()

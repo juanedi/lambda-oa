@@ -1,6 +1,5 @@
 package com.zauberlabs.bigdata.lambdaoa.realtime.spouts;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -34,8 +33,8 @@ public class RandomLongSpout extends BaseRichSpout {
     @Override
     public void nextTuple() {
         c++;
-        if (c % 1000 == 0) {
-            collector.emit(new Values(DateUtils.truncate(new Date(), Calendar.MINUTE).getTime()));
+        if (c % 10000 == 0) {
+            collector.emit(new Values(DateUtils.addMinutes(new Date(), -1).getTime()));
         }
     }
 

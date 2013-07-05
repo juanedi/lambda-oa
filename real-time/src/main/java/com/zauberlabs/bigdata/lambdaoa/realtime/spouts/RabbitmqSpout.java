@@ -28,7 +28,7 @@ import com.rabbitmq.client.QueueingConsumer;
  * 
  * @since 05/07/2013
  */
-@SuppressWarnings({"rawtypes", "serial"})
+@SuppressWarnings({"rawtypes", "serial", })
 public class RabbitmqSpout extends BaseRichSpout {
     
     private SpoutOutputCollector collector;

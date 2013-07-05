@@ -5,8 +5,6 @@ package com.zauberlabs.bigdata.lambdaoa.realtime.util;
 
 import java.util.Map;
 
-import com.google.common.collect.Table;
-
 /**
  * TODO: Description of the class, Comments in english by default  
  * 
@@ -19,5 +17,5 @@ public interface FragStore {
     void updateFragCount(Map<String, Long> fraggers);
 
     /** Updates vs frags matrix */
-    void updateFragVersusCount(Table<String, String, Integer> fraggers);
+    void updateFragVersusCount(VsCount fraggers);
 }
