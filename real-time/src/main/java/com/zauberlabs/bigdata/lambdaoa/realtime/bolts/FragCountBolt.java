@@ -42,15 +42,15 @@ public class FragCountBolt extends BaseRichBolt {
     @SuppressWarnings("rawtypes")
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         this.collector = collector;
-//        this.fragStore = new SploutUpdater(new SploutClient(""));
-        this.fragStore = new NullFragStore();
         this.fragsCounters = new DatePartitionedMap<Multiset<String>>(new Callable<Multiset<String>>() {
                 @Override public Multiset<String> call() throws Exception {
                     return HashMultiset.create();
                 }
         });
+//        this.fragStore = new SploutUpdater(new SploutClient(""));
+        setFragStore(new NullFragStore());
     }
-
+    
     @Override
     public void execute(Tuple tuple) {
         final Date timeFrame = new Date(tuple.getLong(tuple.fieldIndex("time_frame")));
@@ -60,10 +60,14 @@ public class FragCountBolt extends BaseRichBolt {
         } else {
             final String fragger = tuple.getString(tuple.fieldIndex("fragger"));
             
-            fragsCounters.get(timeFrame).add(fragger);
+            incrementFraggerForTime(timeFrame, fragger);
         }
         
         collector.ack(tuple);
+    }
+
+    public final void incrementFraggerForTime(final Date timeFrame, final String fragger) {
+        fragsCounters.get(timeFrame).add(fragger);
     }
     
     public final void writeToStoreFrom(final Date ts) {
@@ -83,5 +87,10 @@ public class FragCountBolt extends BaseRichBolt {
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
 //        declarer.declare(new Fields("time_frame", "fragger", "count"));
+    }
+    
+    /** Sets the fragStore. */
+    public void setFragStore(final FragStore fragStore) {
+        this.fragStore = fragStore;
     }
 }

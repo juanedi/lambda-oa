@@ -26,7 +26,7 @@ import com.zauberlabs.bigdata.lambdaoa.realtime.util.VsCount;
  * @since 10/05/2013
  */
 @SuppressWarnings("rawtypes")
-public class FraggerFraggedCountBolt extends BaseRichBolt {
+public class VsCountBolt extends BaseRichBolt {
     
     /** <code>serialVersionUID</code> */
     private static final long serialVersionUID = -2261986721084451354L;
@@ -38,7 +38,7 @@ public class FraggerFraggedCountBolt extends BaseRichBolt {
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         this.collector = collector;
 //        this.fragStore = new SploutUpdater(new SploutClient(""));
-        this.fragStore = new NullFragStore();
+        setFragStore(new NullFragStore());
         this.fraggerFraggedCounter = new DatePartitionedMap<VsCount>(new Callable<VsCount>() {
                 @Override public VsCount call() throws Exception {
                     return new VsCount();
@@ -55,10 +55,14 @@ public class FraggerFraggedCountBolt extends BaseRichBolt {
             final String fragger = tuple.getStringByField("fragger");
             final String fragged = tuple.getStringByField("fragged");
             
-            fraggerFraggedCounter.get(timeFrame).update(fragger, fragged);
+            incrementForDate(timeFrame, fragger, fragged);
         }
         
         collector.ack(tuple);
+    }
+
+    public final void incrementForDate(final Date timeFrame, final String fragger, final String fragged) {
+        fraggerFraggedCounter.get(timeFrame).update(fragger, fragged);
     }
     
     public synchronized final void writeToStoreFrom(final Date timeFrame) {
@@ -75,6 +79,13 @@ public class FraggerFraggedCountBolt extends BaseRichBolt {
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
 //        declarer.declare(new Fields("fragger", "fragged", "count"));
+    }
+
+    /**
+     * @param fragStore2
+     */
+    public void setFragStore(FragStore fragStore2) {
+        this.fragStore = fragStore2;
     }
 
 }

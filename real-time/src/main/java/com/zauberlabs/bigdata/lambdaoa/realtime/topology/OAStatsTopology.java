@@ -1,7 +1,7 @@
 package com.zauberlabs.bigdata.lambdaoa.realtime.topology;
 
 import com.zauberlabs.bigdata.lambdaoa.realtime.bolts.FragCountBolt;
-import com.zauberlabs.bigdata.lambdaoa.realtime.bolts.FraggerFraggedCountBolt;
+import com.zauberlabs.bigdata.lambdaoa.realtime.bolts.VsCountBolt;
 import com.zauberlabs.bigdata.lambdaoa.realtime.bolts.SplitRecordBolt;
 import com.zauberlabs.bigdata.lambdaoa.realtime.spouts.RabbitmqSpout;
 import com.zauberlabs.bigdata.lambdaoa.realtime.spouts.RandomLongSpout;
@@ -37,7 +37,7 @@ public final class OAStatsTopology {
             .fieldsGrouping("record_split", new Fields("fragger", "time_frame"))
             .shuffleGrouping("drop_to_splout_source");
 
-        builder.setBolt("frag_matrix_count", new FraggerFraggedCountBolt(), 12)
+        builder.setBolt("frag_matrix_count", new VsCountBolt(), 12)
             .fieldsGrouping("record_split", new Fields("fragger", "time_frame"))
             .shuffleGrouping("drop_to_splout_source");
         
