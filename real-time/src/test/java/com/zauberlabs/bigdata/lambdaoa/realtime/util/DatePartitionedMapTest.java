@@ -59,7 +59,9 @@ public class DatePartitionedMapTest {
         
         map.dropLessThan(new Date(1001));
         
-        assertEquals(ImmutableSortedMap.of(new Date(1001), Arrays.asList("f")), map.getTarget());
+        assertEquals(ImmutableSortedMap.of(
+            new Date(2000), Arrays.asList("ff"),
+            new Date(1001), Arrays.asList("f")), map.getTarget());
     }
 
     
