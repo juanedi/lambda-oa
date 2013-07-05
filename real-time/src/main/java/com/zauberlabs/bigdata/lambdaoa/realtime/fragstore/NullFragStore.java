@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2013 MercadoLibre  -- All rights reserved
  */
-package com.zauberlabs.bigdata.lambdaoa.realtime.util;
+package com.zauberlabs.bigdata.lambdaoa.realtime.fragstore;
 
 import java.util.Map;
+
+import com.zauberlabs.bigdata.lambdaoa.realtime.util.VsCount;
 
 
 /**
@@ -14,16 +16,14 @@ import java.util.Map;
  */
 public class NullFragStore implements FragStore {
     
-
     @Override
     public void updateFragCount(Map<String, Long> fraggers) {
-        System.out.println(fraggers);
 
     }
 
     @Override
     public void updateFragVersusCount(VsCount fraggers) {
-        System.out.println(fraggers);
+        
     }
 
 }

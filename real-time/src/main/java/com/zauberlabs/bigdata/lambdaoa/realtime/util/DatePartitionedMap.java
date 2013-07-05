@@ -9,8 +9,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.apache.commons.lang.UnhandledException;
-import org.fest.util.Preconditions;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSortedMap;
 
 /**

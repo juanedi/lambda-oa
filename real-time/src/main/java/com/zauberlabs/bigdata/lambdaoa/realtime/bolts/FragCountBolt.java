@@ -7,8 +7,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import org.testng.collections.Maps;
-
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
@@ -17,10 +15,11 @@ import backtype.storm.tuple.Tuple;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
+import com.zauberlabs.bigdata.lambdaoa.realtime.fragstore.FragStore;
+import com.zauberlabs.bigdata.lambdaoa.realtime.fragstore.NullFragStore;
 import com.zauberlabs.bigdata.lambdaoa.realtime.util.DatePartitionedMap;
-import com.zauberlabs.bigdata.lambdaoa.realtime.util.FragStore;
-import com.zauberlabs.bigdata.lambdaoa.realtime.util.NullFragStore;
 
 /**
  * Counter for fragger kills  

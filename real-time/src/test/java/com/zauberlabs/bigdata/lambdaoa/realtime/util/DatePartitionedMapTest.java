@@ -4,6 +4,7 @@
 package com.zauberlabs.bigdata.lambdaoa.realtime.util;
 
 import static junit.framework.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.concurrent.Callable;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.testng.collections.Lists;
 
 import com.google.common.collect.ImmutableSortedMap;
@@ -32,6 +34,22 @@ public class DatePartitionedMapTest {
             @Override public List<String> call() throws Exception { return Lists.newArrayList(); } });
     }
     
+    
+    @Test
+    public final void should_call_creator_for_date_only_once() throws Exception {
+        final Callable<List<String>> mock = Mockito.mock(Callable.class);
+        final Date date = new Date();
+        
+        when(mock.call()).thenReturn(Lists.<String>newArrayList());
+        
+        map = new DatePartitionedMap<List<String>>(mock);
+        
+        map.get(date);
+        map.get(date);
+        map.get(date);
+        
+        verify(mock, times(1)).call();
+    }
     @Test
     public final void should_allow_addition_of_data_after_drop() {
         

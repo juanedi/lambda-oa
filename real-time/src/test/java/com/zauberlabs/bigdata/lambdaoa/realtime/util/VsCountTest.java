@@ -23,6 +23,15 @@ public class VsCountTest {
         VsCount vsCount2 = new VsCount();
         assertTrue(vsCount.sum(vsCount2).getTarget().isEmpty());
     }
+   
+    @Test
+    public final void should_add_count_on_update() {
+        VsCount vsCount = new VsCount();
+        vsCount.update("a", "b");
+        assertEquals(vsCount.getTarget(), ImmutableTable.of("a", "b", 1));
+        vsCount.update("a", "b");
+        assertEquals(vsCount.getTarget(), ImmutableTable.of("a", "b", 2));
+    }
     
     @Test
     public final void should_merge_empty_and_non_empty() {

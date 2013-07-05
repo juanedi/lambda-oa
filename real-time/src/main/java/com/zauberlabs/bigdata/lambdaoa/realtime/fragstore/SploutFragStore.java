@@ -1,17 +1,18 @@
 /*
  * Copyright (c) 2013 MercadoLibre  -- All rights reserved
  */
-package com.zauberlabs.bigdata.lambdaoa.realtime.util;
+package com.zauberlabs.bigdata.lambdaoa.realtime.fragstore;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.fest.util.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Table.Cell;
 import com.splout.db.common.SploutClient;
+import com.zauberlabs.bigdata.lambdaoa.realtime.util.VsCount;
 
 /**
  * TODO: Description of the class, Comments in english by default  
@@ -19,7 +20,7 @@ import com.splout.db.common.SploutClient;
  * 
  * @since 05/07/2013
  */
-public class SploutUpdater implements FragStore {
+public class SploutFragStore implements FragStore {
     
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -27,7 +28,7 @@ public class SploutUpdater implements FragStore {
     private final String tablespace = "frag_stats";
     
     /** Creates the SploutUpdater. */
-    public SploutUpdater(final SploutClient client) {
+    public SploutFragStore(final SploutClient client) {
         this.client = Preconditions.checkNotNull(client);
     }
     
