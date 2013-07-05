@@ -9,7 +9,7 @@
   <name>Lambda OA</name>
 
   <modules>
-    <module>batch-jobs</module>
+    <module>batch</module>
     <module>real-time</module>
   </modules>
 

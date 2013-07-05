@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.zauberlabs.bigdata</groupId>
-        <artifactId>lambdaoa-parent</artifactId>
+        <artifactId>lambdaoa-batch-parent</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.zauberlabs.bigdata</groupId>
-    <artifactId>lambdaoa-batch-jobs</artifactId>
+    <artifactId>lambdaoa-batch-service</artifactId>
     <packaging>jar</packaging>
-    <name>Lambda OA::Batch Jobs</name>
+    <name>Lambda OA::Batch::Service</name>
 
     <dependencies>
         <!-- Dropwizard -->
