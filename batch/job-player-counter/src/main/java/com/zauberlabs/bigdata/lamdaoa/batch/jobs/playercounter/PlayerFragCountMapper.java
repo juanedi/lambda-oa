@@ -10,8 +10,8 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-import com.zauberlabs.bigdata.lamdaoa.util.CsvTupleSerializationFormat;
-import com.zauberlabs.bigdata.lamdaoa.util.TupleSerializationFormat;
+import com.zauberlabs.bigdata.lamdaoa.batch.jobs.util.CsvTupleSerializationFormat;
+import com.zauberlabs.bigdata.lamdaoa.batch.jobs.util.TupleSerializationFormat;
 
 /**
  * For each entry with format <gameid,fragger, fragged> produces a tuple <fragger, 1>.

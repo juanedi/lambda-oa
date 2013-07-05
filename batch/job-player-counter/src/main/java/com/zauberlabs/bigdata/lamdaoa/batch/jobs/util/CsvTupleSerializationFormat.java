@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013 MercadoLibre  -- All rights reserved
  */
-package com.zauberlabs.bigdata.lamdaoa.util;
+package com.zauberlabs.bigdata.lamdaoa.batch.jobs.util;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
