@@ -13,7 +13,7 @@
 
     <modules>
         <module>service</module>
-        <module>job-player-counter</module>
+        <module>mr-jobs</module>
     </modules>
 
 </project>

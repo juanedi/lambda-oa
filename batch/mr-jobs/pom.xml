@@ -8,9 +8,9 @@
         <version>0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.zauberlabs.bigdata</groupId>
-    <artifactId>lambdaoa-batch-job-player-counter</artifactId>
+    <artifactId>lambdaoa-batch-mr-jobs</artifactId>
     <packaging>jar</packaging>
-    <name>Lambda OA::Batch::Jobs::Player Counter</name>
+    <name>Lambda OA::Batch::Jobs</name>
 
     <dependencies>
         <dependency>
@@ -91,7 +91,7 @@
                                     implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                                 <transformer
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.zauberlabs.bigdata.lamdaoa.batch.jobs.playercounter.PlayerFragCountRunner</mainClass>
+                                    <mainClass>com.zauberlabs.bigdata.lamdaoa.batch.jobs.OaJobRunner</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
