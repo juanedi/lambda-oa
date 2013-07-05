@@ -1,6 +1,6 @@
 http:
-  adminPort: 8082
-  port: 9193
+  adminPort: 8080
+  port: 9090
   requestLog:
     console:
       enabled: false

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013 MercadoLibre  -- All rights reserved
  */
-package com.zauberlabs.bigdata.lamdaoa;
+package com.zauberlabs.bigdata.lamdaoa.batch;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;

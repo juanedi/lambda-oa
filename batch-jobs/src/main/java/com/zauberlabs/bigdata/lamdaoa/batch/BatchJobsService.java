@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013 MercadoLibre  -- All rights reserved
  */
-package com.zauberlabs.bigdata.lamdaoa;
+package com.zauberlabs.bigdata.lamdaoa.batch;
 
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
