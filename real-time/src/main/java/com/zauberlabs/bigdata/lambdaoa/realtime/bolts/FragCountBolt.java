@@ -3,9 +3,11 @@
  */
 package com.zauberlabs.bigdata.lambdaoa.realtime.bolts;
 
+import java.util.Date;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.Callable;
+
+import org.testng.collections.Maps;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -13,9 +15,13 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Tuple;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
+import com.splout.db.common.SploutClient;
+import com.zauberlabs.bigdata.lambdaoa.realtime.util.DatePartitionedMap;
+import com.zauberlabs.bigdata.lambdaoa.realtime.util.FragStore;
+import com.zauberlabs.bigdata.lambdaoa.realtime.util.SploutUpdater;
 
 /**
  * Counter for fragger kills  
@@ -28,45 +34,51 @@ public class FragCountBolt extends BaseRichBolt {
     /** <code>serialVersionUID</code> */
     private static final long serialVersionUID = 1828794992746417016L;
     
-    private SortedMap<Long, Multiset<String>> fragsCounters = newMap(Maps.<Long, Multiset<String>>newHashMap());
+    private DatePartitionedMap<Multiset<String>> fragsCounters;
 
     private OutputCollector collector;
+
+    private FragStore fragStore;
     
     @Override
     @SuppressWarnings("rawtypes")
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         this.collector = collector;
+        this.fragStore = new SploutUpdater(new SploutClient(""));
+        this.fragsCounters = new DatePartitionedMap<Multiset<String>>(new Callable<Multiset<String>>() {
+                @Override public Multiset<String> call() throws Exception {
+                    return HashMultiset.create();
+                }
+        });
     }
 
     @Override
     public void execute(Tuple tuple) {
+        final Date timeFrame = new Date(tuple.getLong(tuple.fieldIndex("time_frame")));
+        
         if(tuple.getSourceComponent().equals("drop_to_splout_source")) {
-            writeToStoreFrom(tuple.getLongByField("time_frame"));
+            writeToStoreFrom(timeFrame);
         } else {
             final String fragger = tuple.getString(tuple.fieldIndex("fragger"));
             
-            final Long timeFrame = tuple.getLong(tuple.fieldIndex("time_frame"));
-            
-            Multiset<String> multiset = fragsCounters.get(timeFrame);
-            
-            if (multiset == null) {
-                multiset = HashMultiset.create();
-                fragsCounters.put(timeFrame, multiset);
-            }
-            multiset.add(fragger);
+            fragsCounters.get(timeFrame).add(fragger);
         }
         
         collector.ack(tuple);
     }
     
-    public final void writeToStoreFrom(final Long ts) {
-        this.fragsCounters = newMap(fragsCounters.tailMap(ts));
+    public final void writeToStoreFrom(final Date ts) {
+        this.fragsCounters.dropLessThan(ts);
         
-        System.out.println(fragsCounters);
-    }
-    
-    private SortedMap<Long, Multiset<String>> newMap(Map<Long, Multiset<String>> n) {
-        return new ConcurrentSkipListMap<Long, Multiset<String>>(n);
+        final Map<String, Long> counters = Maps.newHashMap();
+        for (final Multiset<String> multiset : fragsCounters.getTarget().values()) {
+            for (String string : multiset.elementSet()) {
+                final Long base = Objects.firstNonNull(counters.get(string), 0L);
+                counters.put(string,  base + multiset.count(string));
+            }
+        }
+        
+        fragStore.updateFragCount(counters);
     }
     
     @Override
