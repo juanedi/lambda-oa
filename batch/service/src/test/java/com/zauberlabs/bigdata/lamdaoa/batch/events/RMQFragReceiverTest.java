@@ -7,7 +7,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.rabbitmq.client.QueueingConsumer;
-import com.zauberlabs.bigdata.lamdaoa.batch.Frag;
 
 
 /**
@@ -26,22 +25,6 @@ public class RMQFragReceiverTest {
         
         RMQFragReceiver receiver = new RMQFragReceiver(consumer, fragListener);
         receiver.run();
-    }
-
-    /**
-     * {@link FragListener} that prints frag information.  
-     * 
-     * @since Aug 23, 2013
-     */
-    private static class PrintFragListener implements FragListener {
-
-        /** @see FragListener#process(Frag) */
-        @Override
-        public void process(Frag frag) {
-            System.out.println(frag.getTimestamp() + "," + frag.getGame()
-                       + "," + frag.getFragger() + "," + frag.getFragged());
-        }
-        
     }
     
 }

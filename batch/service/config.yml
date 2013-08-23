@@ -1,3 +1,5 @@
+rmqHost: localhost
+
 http:
   adminPort: 8080
   port: 9090

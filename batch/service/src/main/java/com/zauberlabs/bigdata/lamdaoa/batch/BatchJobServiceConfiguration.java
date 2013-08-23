@@ -3,6 +3,8 @@
  */
 package com.zauberlabs.bigdata.lamdaoa.batch;
 
+import javax.validation.constraints.NotNull;
+
 import com.yammer.dropwizard.config.Configuration;
 
 /**
@@ -13,4 +15,10 @@ import com.yammer.dropwizard.config.Configuration;
  */
 public class BatchJobServiceConfiguration extends Configuration {
 
+    @NotNull private String rmqHost;
+
+    public String getRmqHost() {
+        return rmqHost;
+    }
+    
 }
